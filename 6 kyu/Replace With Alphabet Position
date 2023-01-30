@@ -1,0 +1,46 @@
+/*
+				DESCRIPTION
+
+Welcome.
+
+In this kata you are required to, given a string, replace every letter with its position in the alphabet.
+
+If anything in the text isn't a letter, ignore it and don't return it.
+
+"a" = 1, "b" = 2, etc.
+
+Example
+alphabet_position("The sunset sets at twelve o' clock.")
+Should return "20 8 5 19 21 14 19 5 20 19 5 20 19 1 20 20 23 5 12 22 5 15 3 12 15 3 11" ( as a string )
+
+*/
+
+#include <stdlib.h>
+#include <ctype.h>
+#include <strings.h>
+#include <string.h>
+
+char	*ft_itoa(int n)
+{
+	long int		nbr = n;
+	int				  size = nbr < 0 ? 0 : -1;
+  
+  for (;labs(nbr) > 0; size++, nbr/= 10);
+  char  *str = calloc(sizeof(char), size + 1);
+  nbr = n;
+	if (!nbr)
+		*str = '-';
+	for (;nbr > 0; size--, nbr /= 10)
+		str[size] = labs(nbr) % 10 + 48;
+	return (n == 0 ? "0" : str);
+}
+
+char *alphabet_position(const char *text)
+{
+  char *str = calloc(sizeof(char), strlen(text) * 3);
+
+  for (int i = 0; text[i]; i++)
+      isalpha(text[i]) > 0 ? text[i] >= 97 ? strcat(str, ft_itoa(text[i] - 96)) : strcat(str, ft_itoa(text[i] - 64)), strcat(str, " ") : (void)str;
+  str[strlen(str) - 1] = '\0';
+  return str;
+}
